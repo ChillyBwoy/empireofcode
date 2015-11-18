@@ -43,8 +43,8 @@ def convert(str_number, radix):
         filtered = [s for s in str_number if s in letters]
         if len(filtered) != len(str_number):
             return -1
+        return int(str_number, radix)
 
-        
 
 if __name__ == '__main__':
     # These "asserts" using only for self-checking and not necessary for auto-testing
