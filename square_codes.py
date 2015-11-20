@@ -83,25 +83,21 @@ def get_neighbours(edge, edges):
     )
 
     pred = lambda a, b: reduce(operator.or_, [p(a, b) for p in pred_list], False)
+
     return [e for e in edges if pred(edge, e)]
 
 
 def get_edges(*args):
     edges = []
     for edge in args:
-        rest = [e for e in args if e[0] != edge[0] and e[1] != edge[1]]
+        # rest = [e for e in args if e[0] != edge[0] and e[1] != edge[1]]
+        index = args.index(edge)
+        rest = args[0:index] + args[index+1:]
         neighbours = get_neighbours(edge, rest)
-        print(edge, '==>' , neighbours)
+        print(edge, '=>', neighbours)
 
-        edges.append([edge, neighbours])
+        # edges.append([edge, neighbours])
     return edges
-
-    # curr = edges[0]
-    # rest = [e for e in edges if e[0] != curr[0] and e[1] != curr[1]]
-    #
-    # print(curr, rest, get_neighbours(curr, rest))
-    #
-    # return get_edges(rest, acc + [curr, get_neighbours(curr, rest)])
 
 
 def count_squares(*lines):
