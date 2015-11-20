@@ -48,8 +48,17 @@ generalized for real world tasks. For example; it allows you to clarify data
 by removing low frequency elements (noise)."""
 
 
+def as_list(data):
+    for el in data:
+        try:
+            yield (int(el))
+        except ValueError:
+            yield el.lower()
+
+
 def non_unique(data):
-    return data
+    src = [x for x in as_list(data)]
+    print(src)
 
 
 if __name__ == "__main__":
