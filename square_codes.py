@@ -70,16 +70,45 @@ you can improve your program and use it to search for more complex patterns,
 shapes and objects.
 """
 
+import operator
+from functools import reduce
 
-def squares(*edges, acc=[]):
-    if len(edges) == 0:
-        return acc
 
-    edge = edges[0]
-    neighbor = [e for e in edges[0:] if edge[0] == e[1] or edge[1] == e[0]]
+def get_neighbours(edge, edges):
+    pred_list = (
+        lambda a, b: a[0] == b[0],
+        lambda a, b: a[0] == b[1],
+        lambda a, b: a[1] == b[0],
+        lambda a, b: a[1] == b[1],
+    )
+
+    pred = lambda a, b: reduce(operator.or_, [p(a, b) for p in pred_list], False)
+    return [e for e in edges if pred(edge, e)]
+
+
+def get_edges(*args):
+    edges = []
+    for edge in args:
+        rest = [e for e in args if e[0] != edge[0] and e[1] != edge[1]]
+        neighbours = get_neighbours(edge, rest)
+        print(edge, '==>' , neighbours)
+
+        edges.append([edge, neighbours])
+    return edges
+
+    # curr = edges[0]
+    # rest = [e for e in edges if e[0] != curr[0] and e[1] != curr[1]]
+    #
+    # print(curr, rest, get_neighbours(curr, rest))
+    #
+    # return get_edges(rest, acc + [curr, get_neighbours(curr, rest)])
 
 
 def count_squares(*lines):
+    print(lines)
+    edges = get_edges(*lines)
+    # for e in edges:
+    #     print(e)
     return 0
 
 
