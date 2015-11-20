@@ -71,6 +71,14 @@ shapes and objects.
 """
 
 
+def squares(*edges, acc=[]):
+    if len(edges) == 0:
+        return acc
+
+    edge = edges[0]
+    neighbor = [e for e in edges[0:] if edge[0] == e[1] or edge[1] == e[0]]
+
+
 def count_squares(*lines):
     return 0
 
