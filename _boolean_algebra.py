@@ -76,13 +76,17 @@ OPERATION_NAMES = ("conjunction", "disjunction", "implication", "exclusive",
 
 
 def boolean(x, y, operation):
-    if operation is OPERATION_NAMES[0]:
+    if operation == OPERATION_NAMES[0]:
         return 1 if x and y else 0
-    elif operation is OPERATION_NAMES[1]:
+    elif operation == OPERATION_NAMES[1]:
         return 1 if x or y else 0
-    elif operation is OPERATION_NAMES[2]:
-        return 1 if x is not y else 0
-    return 1 or 0
+    elif operation == OPERATION_NAMES[2]:
+        return 1 if x and y or not x else 0
+    elif operation == OPERATION_NAMES[3]:
+        return x ^ y
+    elif operation == OPERATION_NAMES[4]:
+        return 1 if x is y else 0
+    return None
 
 
 if __name__ == '__main__':
