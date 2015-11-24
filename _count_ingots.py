@@ -47,8 +47,6 @@ def ingot(src):
 
     val = LETTERS.index(let) * len(NUMBERS)
 
-    print(src, val, num, val + num)
-
     return val + num
 
 
