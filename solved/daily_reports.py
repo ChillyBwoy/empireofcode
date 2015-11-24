@@ -66,6 +66,7 @@ import datetime
 
 from string import ascii_uppercase
 from datetime import datetime
+from functools import reduce
 
 LETTERS = list(ascii_uppercase)
 NUMBERS = list(range(1, 10))
@@ -89,14 +90,18 @@ def report_data(src):
 
 
 def count_reports(full_report, from_date, to_date):
-    reports = [x.split(' ') for x in full_report.split('\n')]
-
-    ingots_by_date = ((report_data(d), ingot_list(ing)) for d, ing in reports)
-
     start, finish = report_data(from_date), report_data(to_date)
 
-    ings = [sum(ings) for (d, ings) in ingots_by_date if start <= d <= finish]
-    return sum(ings)
+    def split(data):
+        return [x.split(' ') for x in data.split('\n')]
+
+    def group(data):
+        return [(report_data(d), ingot_list(ing)) for d, ing in data]
+
+    def calc(data):
+        return [sum(ings) for (d, ings) in data if start <= d <= finish]
+
+    return reduce(lambda x, f: f(x), [split, group, calc, sum], full_report)
 
 
 if __name__ == '__main__':
